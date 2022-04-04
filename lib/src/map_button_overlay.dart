@@ -43,7 +43,7 @@ class _MapButtonOverlayState extends State<MapButtonOverlay> {
         mapButtons(
             child: Text(
               "+",
-              style: TextStyle(fontSize: 22, color: ColorRes.blueGray),
+              style: TextStyle(fontSize: 22, color: FColor.blueGray),
             ),
             onTap: () {
               this.widget.onPlusTap();
@@ -51,7 +51,7 @@ class _MapButtonOverlayState extends State<MapButtonOverlay> {
         mapButtons(
             child: Text(
               "-",
-              style: TextStyle(fontSize: 22, color: ColorRes.blueGray),
+              style: TextStyle(fontSize: 22, color: FColor.blueGray),
             ),
             onTap: this.widget.onMinusTap),
         widget.enableOperations
@@ -66,7 +66,7 @@ class _MapButtonOverlayState extends State<MapButtonOverlay> {
                                   mapButtons(
                                       child: Icon(
                                         FIcons.polygon,
-                                        color: ColorRes.blueGray,
+                                        color: FColor.blueGray,
                                       ),
                                       onTap: () {
                                         widget.mapStateBloc.toggleMapState(
@@ -82,7 +82,7 @@ class _MapButtonOverlayState extends State<MapButtonOverlay> {
                                   mapButtons(
                                       child: Icon(
                                         Icons.location_on,
-                                        color: ColorRes.blueGray,
+                                        color: FColor.blueGray,
                                       ),
                                       onTap: () {
                                         widget.mapStateBloc.toggleMapState(
@@ -98,7 +98,7 @@ class _MapButtonOverlayState extends State<MapButtonOverlay> {
                                   mapButtons(
                                       child: Icon(
                                         Icons.delete_outline,
-                                        color: ColorRes.blueGray,
+                                        color: FColor.blueGray,
                                       ),
                                       onTap: () {
                                         widget.mapStateBloc.toggleMapState(
@@ -127,14 +127,13 @@ class _MapButtonOverlayState extends State<MapButtonOverlay> {
         height: 30,
         child: Material(
           borderRadius: BorderRadius.circular(8.0),
-          color: active
-              ? ColorRes.filterChipSelectedColor
-              : ColorRes.secondaryColor,
+          color:
+              active ? FColor.filterChipSelectedColor : FColor.secondaryColor,
           child: InkWell(
             borderRadius: BorderRadius.circular(8.0),
             onTap: onTap,
             mouseCursor: SystemMouseCursors.click,
-            hoverColor: ColorRes.gray1,
+            hoverColor: FColor.gray1,
             splashFactory: InkSplash.splashFactory,
             child: Container(
               alignment: Alignment.center,

@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-class ColorRes {
+class FColor {
   static final blueColleague = Color(0xFF072F5F);
   static final blueHover = Color(0xFF3895D3);
   static final bluePressed = Color(0xFF1261A0);
