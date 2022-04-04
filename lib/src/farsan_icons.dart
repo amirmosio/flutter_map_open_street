@@ -19,7 +19,7 @@ import 'package:flutter/widgets.dart';
 class FIcons {
   FIcons._();
 
-  static const _kFontFam = 'Farsan-Icons';
+  static const _kFontFam = 'MyIcons';
   static const String? _kFontPkg = null;
 
   static const IconData polygon =
