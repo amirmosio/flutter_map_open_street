@@ -11,10 +11,12 @@ class MapButtonOverlay extends StatefulWidget {
   final Function()? onPolygonTap;
   final Function()? onLocationTap;
   final Function()? onDeleteTap;
+  final Function()? onMyLocationTap;
   final bool enableOperations;
   final bool enablePolygonButton;
   final bool enableLocationButton;
   final bool enableDeleteButton;
+  final bool enableMyLocationButton;
   final MapStateBloc mapStateBloc;
 
   const MapButtonOverlay({
@@ -25,10 +27,12 @@ class MapButtonOverlay extends StatefulWidget {
     this.onPolygonTap,
     this.onLocationTap,
     this.onDeleteTap,
+    this.onMyLocationTap,
     this.enableOperations = true,
     this.enableDeleteButton = true,
     this.enableLocationButton = true,
     this.enablePolygonButton = true,
+    this.enableMyLocationButton = true,
   }) : super(key: key);
 
   @override
@@ -54,12 +58,22 @@ class _MapButtonOverlayState extends State<MapButtonOverlay> {
               style: TextStyle(fontSize: 22, color: FColor.blueGray),
             ),
             onTap: this.widget.onMinusTap),
+        (widget.enableMyLocationButton
+            ? mapButtons(
+                child: Icon(
+                  Icons.my_location_outlined,
+                  color: FColor.blueGray,
+                ),
+                onTap: () {
+                  widget.onMyLocationTap?.call();
+                },
+                active: false)
+            : SizedBox()),
         widget.enableOperations
             ? StreamBuilder<MapStateWrapper>(
                 initialData: widget.mapStateBloc.currentMapState,
                 stream: widget.mapStateBloc.mapStateStream,
-                builder: (BuildContext context,
-                    AsyncSnapshot<MapStateWrapper> snapshot) {
+                builder: (BuildContext context, AsyncSnapshot<MapStateWrapper> snapshot) {
                   return Column(
                       children: (widget.enablePolygonButton
                               ? [
@@ -69,12 +83,10 @@ class _MapButtonOverlayState extends State<MapButtonOverlay> {
                                         color: FColor.blueGray,
                                       ),
                                       onTap: () {
-                                        widget.mapStateBloc.toggleMapState(
-                                            MapState.DrawingPolygon);
+                                        widget.mapStateBloc.toggleMapState(MapState.DrawingPolygon);
                                         widget.onPolygonTap?.call();
                                       },
-                                      active: snapshot.data?.mapState ==
-                                          MapState.DrawingPolygon)
+                                      active: snapshot.data?.mapState == MapState.DrawingPolygon)
                                 ]
                               : <Widget>[]) +
                           (widget.enableLocationButton
@@ -85,12 +97,12 @@ class _MapButtonOverlayState extends State<MapButtonOverlay> {
                                         color: FColor.blueGray,
                                       ),
                                       onTap: () {
-                                        widget.mapStateBloc.toggleMapState(
-                                            MapState.SelectingALocation);
+                                        widget.mapStateBloc
+                                            .toggleMapState(MapState.SelectingALocation);
                                         widget.onLocationTap?.call();
                                       },
-                                      active: snapshot.data?.mapState ==
-                                          MapState.SelectingALocation)
+                                      active:
+                                          snapshot.data?.mapState == MapState.SelectingALocation)
                                 ]
                               : <Widget>[]) +
                           (widget.enableDeleteButton
@@ -101,12 +113,11 @@ class _MapButtonOverlayState extends State<MapButtonOverlay> {
                                         color: FColor.blueGray,
                                       ),
                                       onTap: () {
-                                        widget.mapStateBloc.toggleMapState(
-                                            MapState.DeletingPolygon);
+                                        widget.mapStateBloc
+                                            .toggleMapState(MapState.DeletingPolygon);
                                         widget.onDeleteTap?.call();
                                       },
-                                      active: snapshot.data?.mapState ==
-                                          MapState.DeletingPolygon),
+                                      active: snapshot.data?.mapState == MapState.DeletingPolygon),
                                 ]
                               : <Widget>[]));
                 },
@@ -116,10 +127,7 @@ class _MapButtonOverlayState extends State<MapButtonOverlay> {
     );
   }
 
-  Widget mapButtons(
-      {required Widget child,
-      required Function()? onTap,
-      bool active = false}) {
+  Widget mapButtons({required Widget child, required Function()? onTap, bool active = false}) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: SizedBox(
@@ -127,8 +135,7 @@ class _MapButtonOverlayState extends State<MapButtonOverlay> {
         height: 30,
         child: Material(
           borderRadius: BorderRadius.circular(8.0),
-          color:
-              active ? FColor.filterChipSelectedColor : FColor.secondaryColor,
+          color: active ? FColor.filterChipSelectedColor : FColor.secondaryColor,
           child: InkWell(
             borderRadius: BorderRadius.circular(8.0),
             onTap: onTap,

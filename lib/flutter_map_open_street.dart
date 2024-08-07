@@ -11,3 +11,4 @@ export 'src/flutter_map.dart';
 export 'src/map_button_overlay.dart';
 export 'src/map_state_bloc.dart';
 export 'src/map_utils.dart';
+export 'src/LocationUtils.dart';
